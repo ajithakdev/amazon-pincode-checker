@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Playwright & Browser Sessions (Keep anonymous & avoid leaking session state / cookies)
+profile/
+.playwright/
+
+# Local Output & Results
+results/
+logs/
+screenshots/
+*.log
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local scratch / backups
+*.bak
+*.tmp

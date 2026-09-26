@@ -1,0 +1,16 @@
+{
+  "source_url": "https://raw.githubusercontent.com/kishorek/India-Codes/master/csv/pincodes.csv",
+  "timestamp": "2026-09-17T02:58:01.698311",
+  "validation": {
+    "total_processed_records": 39736,
+    "malformed_pincodes": 3,
+    "missing_state_records": 0,
+    "duplicates_skipped": 1155
+  },
+  "results": {
+    "tamil_nadu_count": 2820,
+    "bengaluru_count": 93,
+    "combined_unique_count": 2913
+  },
+  "definition_used_for_bengaluru_city": "State='Karnataka', City or District contains 'Bangalore' or 'Bengaluru', AND Pincode starts with '560'. (560 prefix strictly identifies Bangalore City post offices, filtering out Bangalore Rural and Metro areas like 562xxx)."
+}

@@ -1,0 +1,7 @@
+{
+  "base_url": "https://www.amazon.in/dp/",
+  "delay_between_requests": 2.0,
+  "max_retries": 3,
+  "retry_delay": 5.0,
+  "page_timeout": 30000
+}
