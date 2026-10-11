@@ -1,3 +1,4 @@
+import re
 import argparse
 import sys
 import json
@@ -19,11 +20,16 @@ def main():
     parser.add_argument("--output", help="Output JSON file path", default="results/results.json")
     parser.add_argument("--max-tests", type=int, help="Maximum number of pincodes to test")
     parser.add_argument("--region", help="Region label for grouping results", default="unknown")
-    parser.add_argument("--strategy", choices=["sequential", "adaptive"], default="adaptive", help="Search strategy")
+    parser.add_argument("--strategy", choices=["sequential", "adaptive"], help="Search strategy (default: sequential if --pincodes/--pincode is given, else adaptive)")
     parser.add_argument("--show-queue", action="store_true", help="Display the initial prioritized queue and exit")
+    parser.add_argument("--workers", type=int, default=1, help="Parallel browser workers, each with its own profile (default: 1)")
+    parser.add_argument("--load-images", action="store_true", help="Load images, media and fonts (blocked by default for speed)")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
 
     args = parser.parse_args()
+
+    if args.strategy is None:
+        args.strategy = "sequential" if (args.pincodes or args.pincode) else "adaptive"
 
     if not args.asin and not args.url and not args.show_queue:
         print("Error: Must provide either --asin or --url")
@@ -80,9 +86,6 @@ def main():
         elif args.pincode:
             pincodes_list.append((args.pincode.strip(), args.region, {}))
 
-    if args.max_tests:
-        pincodes_list = pincodes_list[:args.max_tests]
-
     if not pincodes_list:
         print("Error: No pincodes to test.")
         sys.exit(1)
@@ -100,10 +103,19 @@ def main():
         resume=args.resume,
         screenshots=args.screenshots,
         output_path=args.output,
-        debug=args.debug
+        debug=args.debug,
+        block_resources=not args.load_images
     )
 
-    checker.run(pincodes_list)
+    # Drop malformed pincodes before any browser work
+    valid = [item for item in pincodes_list if re.fullmatch(r"[1-9][0-9]{5}", str(item[0]))]
+    if len(valid) != len(pincodes_list):
+        print(f"Warning: skipping {len(pincodes_list) - len(valid)} malformed pincode(s).")
+    if not valid:
+        print("Error: No valid pincodes to test.")
+        sys.exit(1)
+
+    checker.run(valid, max_tests=args.max_tests, workers=args.workers)
 
 if __name__ == "__main__":
     main()
