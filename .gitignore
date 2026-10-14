@@ -31,3 +31,16 @@ Thumbs.db
 # Local scratch / backups
 *.bak
 *.tmp
+
+# Virtualenvs, secrets, build and tool caches
+.venv/
+.env
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.corrupt
