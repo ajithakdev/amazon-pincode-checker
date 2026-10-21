@@ -1,5 +1,7 @@
 # Amazon Pincode Serviceability Checker
 
+Every link and how-to is in [RESOURCES-AND-GUIDE.md](RESOURCES-AND-GUIDE.md).
+
 A robust, local automation tool to determine if a specific Amazon.in product (ASIN) is deliverable to a list of Indian pincodes.
 
 ## 1. What the tool does
